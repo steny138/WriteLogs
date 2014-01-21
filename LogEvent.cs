@@ -38,11 +38,11 @@ namespace LogEventForCSharp
         }
         private static void writeLogToFile(string fullPath, string logMessage)
         {
-            FileInfo fileInfo = new FileInfo(fullPath);
-            if (fileInfo.Directory.Exists == false)
-                fileInfo.Directory.Create();
-            File.AppendAllText(fullPath, Environment.NewLine, Encoding.Unicode);
-            File.AppendAllText(fullPath, logMessage, Encoding.Unicode);
+            using(StreamWriter sw = File.AppendText(fullPath))
+           {
+               sw.WriteLine(Environment.NewLine);
+               sw.WriteLine(logMessage);
+           }
         }
     }
 }
